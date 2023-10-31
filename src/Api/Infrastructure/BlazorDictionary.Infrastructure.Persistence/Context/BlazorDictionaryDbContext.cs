@@ -11,10 +11,16 @@ namespace BlazorDictionary.Infrastructure.Persistence.Context
 {
     public class BlazorDictionaryDbContext : DbContext
     {
+
+        public BlazorDictionaryDbContext()
+        {
+
+        }
+
         public const string DEFAULT_SCHEMA = "dbo";
         public BlazorDictionaryDbContext(DbContextOptions options): base(options) 
         { 
-        
+            
         }
 
         public DbSet<User> Users { get; set; }
@@ -28,6 +34,18 @@ namespace BlazorDictionary.Infrastructure.Persistence.Context
         public DbSet<EntryCommentFavorite> EntryCommentFavorites { get; set; }
 
         public DbSet<EmailConfirmation> EmailConfirmations { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured) 
+            {
+                var connStr = "Data Source=CEVDET\\SQLEXPRESS;Initial Catalog=BlazorDictionaryDb;Integrated Security=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+                    optionsBuilder.UseSqlServer(connStr, opt =>
+                    {
+                        opt.EnableRetryOnFailure();
+                    });
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
