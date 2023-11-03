@@ -2,7 +2,7 @@ using BlazorDictionary.Infrastructure.Persistence.Extensions;
 using BlazorDictionary.Api.Application.Extensions;
 using FluentValidation.AspNetCore;
 using FluentValidation;
-using BlazorDictionary.Api.Application.Features.Commands.User;
+using BlazorDictionary.Api.Application.Features.Commands.User.Login;
 
 var builder = WebApplication.CreateBuilder(args);
 
