@@ -19,7 +19,11 @@ namespace BlazorDictionary.Api.Application.Mapping
             CreateMap<UpdateUserCommand, User>();
             CreateMap<CreateEntryCommand, Entry>().ReverseMap();
 
-            CreateMap<CreateEntryCommentCommand, EntryComment>().ReverseMap();        
+            CreateMap<Entry, GetEntriesViewModel>().ForMember(x => x.Commentcount, y => y.MapFrom(z => z.EntryComments.Count));
+
+            CreateMap<CreateEntryCommentCommand, EntryComment>().ReverseMap();      
+            
+
         }
     }
 }

@@ -41,8 +41,7 @@ namespace BlazorDictionary.Api.Application.Features.Commands.User.ChangePassword
                 throw new DatabaseValidationException("Old password is wrong!");
             }
 
-            dbUser.Password = encPass;
-
+            dbUser.Password = PasswordEncryptor.Encrypt(request.NewPassword);
             await _userRepository.UpdateAsync(dbUser);
 
             return true;

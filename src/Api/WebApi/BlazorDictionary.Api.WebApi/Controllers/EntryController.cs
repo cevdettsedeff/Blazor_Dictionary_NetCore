@@ -1,4 +1,6 @@
-﻿using BlazorDictionary.Common.Models.RequestModels;
+﻿using BlazorDictionary.Api.Application.Features.Queries.GetEntries;
+using BlazorDictionary.Api.Application.Features.Queries.GetMainPageEntries;
+using BlazorDictionary.Common.Models.RequestModels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +17,25 @@ namespace BlazorDictionary.Api.WebApi.Controllers
         {
             _mediator = mediator;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetEntries([FromQuery]GetEntriesQuery query)
+        {
+            var entries = await _mediator.Send(query);
+
+            return Ok(entries);
+        }
+
+
+        [HttpGet]
+        [Route("MainPageEntries")]
+        public async Task<IActionResult> GetEntries(int page, int pageSize)
+        {
+            var entries = await _mediator.Send(new GetMainPageEntriesQuery(UserId, page, pageSize));
+
+            return Ok(entries);
+        }
+
 
         [HttpPost]
         [Route("CreateEntry")]
