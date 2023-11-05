@@ -3,6 +3,7 @@ using BlazorDictionary.Api.Application.Extensions;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using BlazorDictionary.Api.Application.Features.Commands.User.Login;
+using BlazorDictionary.Api.WebApi.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureAuth(builder.Configuration);
+
 builder.Services.AddInfrastructureRegistration(builder.Configuration); // Uygulama çalýþtýktan sonra gerekli iþlemleri yapar.
 builder.Services.AddApplicationRegistration(); // Automapper, MediatR ve Fluent Validation kýsmýný buradaki method ile ekledik.
 
@@ -35,6 +38,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.ConfigureExceptionHandling(app.Environment.IsDevelopment());
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
