@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace BlazorDictionary.Api.Application.Features.Commands.Entry.DeleteVote
 {
-    public class DeleteEntryVoteCommandHandler : IRequestHandler<DeleteEntryVoteCommand, bool>
+    public class DeleteEntryVoteCommandHandler : IRequestHandler<DeleteEntryCommentVoteCommand, bool>
     {
-        public async Task<bool> Handle(DeleteEntryVoteCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteEntryCommentVoteCommand request, CancellationToken cancellationToken)
         {
             QueueFactory.SendMessageToExchange(exchangeName: DictionaryConstants.VoteExchangeName,
                 exchangeType: DictionaryConstants.DefaultExchangeType,

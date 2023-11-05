@@ -1,4 +1,5 @@
 ﻿using BlazorDictionary.Api.Application.Features.Commands.User.ConfirmEmail;
+using BlazorDictionary.Api.Application.Features.Queries.GetUserDetail;
 using BlazorDictionary.Api.Domain.Models;
 using BlazorDictionary.Common.Events.User;
 using BlazorDictionary.Common.Models.RequestModels;
@@ -21,6 +22,26 @@ namespace BlazorDictionary.Api.WebApi.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var user = await _mediator.Send(new GetUserDetailQuery(id));
+
+            return Ok(user);
+        }
+
+
+        [HttpGet]
+        [Route("UserName/{userName}")]
+        [HttpPost]
+        public async Task<IActionResult> GetByUserName(string userName)
+        {
+            var user = await _mediator.Send(new GetUserDetailQuery(Guid.Empty, userName));
+
+            return Ok(user);
+        }
+
+
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
@@ -29,13 +50,6 @@ namespace BlazorDictionary.Api.WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
-        {
-            var guid = await _mediator.Send(command);
-
-            return Ok(guid);
-        }
 
         [HttpPost]
         [Route("Update")]
