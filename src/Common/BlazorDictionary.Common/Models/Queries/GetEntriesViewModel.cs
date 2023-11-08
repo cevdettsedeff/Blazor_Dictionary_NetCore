@@ -10,6 +10,6 @@ namespace BlazorDictionary.Common.Models.Queries
     {
         public Guid Id {  get; set; }
         public string Subject { get; set; }
-        public int Commentcount { get; set; }
+        public int CommentCount { get; set; }
     }
 }

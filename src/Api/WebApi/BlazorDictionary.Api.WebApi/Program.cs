@@ -28,6 +28,13 @@ builder.Services.ConfigureAuth(builder.Configuration);
 builder.Services.AddInfrastructureRegistration(builder.Configuration); // Uygulama çalýþtýktan sonra gerekli iþlemleri yapar.
 builder.Services.AddApplicationRegistration(); // Automapper, MediatR ve Fluent Validation kýsmýný buradaki method ile ekledik.
 
+builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,6 +51,8 @@ app.ConfigureExceptionHandling(app.Environment.IsDevelopment());
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseCors("MyPolicy");
 
 app.MapControllers();
 
