@@ -4,17 +4,18 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using BlazorDictionary.Api.Application.Features.Commands.User.Login;
 using BlazorDictionary.Api.WebApi.Infrastructure.Extensions;
+using BlazorDictionary.Api.WebApi.Infrastructure.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(opt => opt.Filters.Add<ValidateModelStateFilter>())
     .AddJsonOptions(opt =>
     {
 
         opt.JsonSerializerOptions.PropertyNamingPolicy = null;
-    });
+    }).ConfigureApiBehaviorOptions( opt => opt.SuppressModelStateInvalidFilter = true);
     
 
 builder.Services.AddValidatorsFromAssemblyContaining<LoginUserCommandValidator>(); 
@@ -23,6 +24,7 @@ builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.ConfigureAuth(builder.Configuration);
 
 builder.Services.AddInfrastructureRegistration(builder.Configuration); // Uygulama çalýþtýktan sonra gerekli iþlemleri yapar.

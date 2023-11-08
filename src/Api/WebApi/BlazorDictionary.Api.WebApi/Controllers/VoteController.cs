@@ -4,6 +4,7 @@ using BlazorDictionary.Api.Application.Features.Queries.GetUserDetail;
 using BlazorDictionary.Common.Models;
 using BlazorDictionary.Common.Models.RequestModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace BlazorDictionary.Api.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VoteController : BaseController
     {
         private readonly IMediator _mediator;

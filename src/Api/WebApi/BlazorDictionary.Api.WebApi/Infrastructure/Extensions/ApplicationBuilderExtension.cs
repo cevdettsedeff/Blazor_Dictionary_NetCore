@@ -7,27 +7,29 @@ namespace BlazorDictionary.Api.WebApi.Infrastructure.Extensions
 {
     public static class ApplicationBuilderExtension
     {
-        public static IApplicationBuilder ConfigureExceptionHandling(this IApplicationBuilder app, bool includeExceptionDetails = false,
-            bool useDefaultHandlingResponse = true, Func<HttpContext, Exception, Task> handleException = null) 
+        public static IApplicationBuilder ConfigureExceptionHandling(this IApplicationBuilder app,
+            bool includeExceptionDetails = false,
+            bool useDefaultHandlingResponse = true,
+            Func<HttpContext, Exception, Task> handleException = null)
         {
-            app.UseExceptionHandler(opt =>
+            app.UseExceptionHandler(options =>
             {
-                app.Run(context =>
+                options.Run(context =>
                 {
                     var exceptionObject = context.Features.Get<IExceptionHandlerFeature>();
 
                     if (!useDefaultHandlingResponse && handleException == null)
-                        throw new ArgumentNullException(nameof(handleException), $"cannot be null when {nameof(useDefaultHandlingResponse)} is false");
+                        throw new ArgumentNullException(nameof(handleException),
+                            $"{nameof(handleException)} cannot be null when {nameof(useDefaultHandlingResponse)} is false");
 
-                    if (!useDefaultHandlingResponse && handleException == null)
+                    if (!useDefaultHandlingResponse && handleException != null)
                         return handleException(context, exceptionObject.Error);
 
                     return DefaultHandleException(context, exceptionObject.Error, includeExceptionDetails);
                 });
             });
-            
+
             return app;
-            
         }
 
         private static async Task DefaultHandleException(HttpContext context, Exception exception, bool includeExceptionDetails)

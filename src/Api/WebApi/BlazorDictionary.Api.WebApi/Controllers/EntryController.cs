@@ -6,6 +6,7 @@ using BlazorDictionary.Api.Application.Features.Queries.GetUserEntries;
 using BlazorDictionary.Common.Models.Queries;
 using BlazorDictionary.Common.Models.RequestModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -73,6 +74,7 @@ namespace BlazorDictionary.Api.WebApi.Controllers
 
         [HttpPost]
         [Route("CreateEntry")]
+        [Authorize]
         public async Task<IActionResult> CreateEntry([FromBody] CreateEntryCommand command)
         {
             if (!command.CreatedById.HasValue)
@@ -85,6 +87,7 @@ namespace BlazorDictionary.Api.WebApi.Controllers
 
         [HttpPost]
         [Route("CreateEntryComment")]
+        [Authorize]
         public async Task<IActionResult> CreateEntryComment([FromBody] CreateEntryCommentCommand command)
         {
             if (!command.CreatedById.HasValue)

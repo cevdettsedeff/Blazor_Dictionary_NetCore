@@ -33,7 +33,6 @@ namespace BlazorDictionary.Api.WebApi.Controllers
 
         [HttpGet]
         [Route("UserName/{userName}")]
-        [HttpPost]
         public async Task<IActionResult> GetByUserName(string userName)
         {
             var user = await _mediator.Send(new GetUserDetailQuery(Guid.Empty, userName));
@@ -53,6 +52,7 @@ namespace BlazorDictionary.Api.WebApi.Controllers
 
         [HttpPost]
         [Route("Update")]
+        [Authorize]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
             var guid = await _mediator.Send(command);
@@ -62,7 +62,7 @@ namespace BlazorDictionary.Api.WebApi.Controllers
 
         [HttpPost]
         [Route("Confirm")]
-        public async Task<IActionResult> ConfirmEMail(Guid id)
+        public async Task<IActionResult> ConfirmEmail(Guid id)
         {
             var guid = await _mediator.Send(new ConfirmEmailCommand() { ConfirmationId = id });
 
@@ -71,6 +71,7 @@ namespace BlazorDictionary.Api.WebApi.Controllers
 
         [HttpPost]
         [Route("ChangePassword")]
+        [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody] ChangeUserPasswordCommand command)
         {
             if (!command.UserId.HasValue)
