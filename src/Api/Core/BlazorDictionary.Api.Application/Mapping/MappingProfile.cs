@@ -21,7 +21,8 @@ namespace BlazorDictionary.Api.Application.Mapping
 
             CreateMap<Entry, GetEntriesViewModel>().ForMember(x => x.CommentCount, y => y.MapFrom(z => z.EntryComments.Count));
 
-            CreateMap<CreateEntryCommentCommand, EntryComment>().ReverseMap();      
+            CreateMap<CreateEntryCommentCommand, EntryComment>().ReverseMap();
+            CreateMap<UserDetailViewModel, User>().ReverseMap();
             
 
         }
