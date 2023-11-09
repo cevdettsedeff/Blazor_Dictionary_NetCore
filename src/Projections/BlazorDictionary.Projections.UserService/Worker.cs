@@ -1,21 +1,40 @@
+using BlazorDictionary.Common;
+using BlazorDictionary.Common.Events.User;
+using BlazorDictionary.Common.Infrastructure;
+using BlazorDictionary.Projections.UserService.Services;
+
 namespace BlazorDictionary.Projections.UserService
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
+        private readonly Services.UserService userService;
+        private readonly EmailService emailService;
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILogger<Worker> logger, Services.UserService userService, EmailService emailService)
         {
             _logger = logger;
+            this.userService = userService;
+            this.emailService = emailService;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            QueueFactory.CreateBasicConsumer()
+            .EnsureExchange(DictionaryConstants.UserExchangeName)
+            .EnsureQueue(DictionaryConstants.UserEmailChangedQueueName, DictionaryConstants.UserExchangeName)
+            .Receive<UserEmailChangedEvent>(user =>
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
-            }
+                // DB Insert 
+                var confirmationId = userService.CreateEmailConfirmation(user).GetAwaiter().GetResult();
+
+                // Generate Link
+                var link = emailService.GenerateConfirmationLink(confirmationId);
+
+                // Send Email
+                emailService.SendEmail(user.NewEmailAddress, link).GetAwaiter().GetResult();
+            })
+            .StartConsuming(DictionaryConstants.UserEmailChangedQueueName);
         }
     }
 }
