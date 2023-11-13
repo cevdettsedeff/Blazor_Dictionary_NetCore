@@ -42,6 +42,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDictionary.WebApp", "
 		{C037B685-1B44-4FAF-9996-A87B8202EB28} = {C037B685-1B44-4FAF-9996-A87B8202EB28}
 	EndProjectSection
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{45A714DE-573A-4770-893C-6FDF860F0CEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A445DE33-FDB7-4FCD-ABD4-3A49EEA898F1}"
+	ProjectSection(SolutionItems) = preProject
+		DockerComposeSteps_External.txt = DockerComposeSteps_External.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +91,10 @@ Global
 		{FE7BE74E-7139-4B8D-9950-6E7189B62793}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE7BE74E-7139-4B8D-9950-6E7189B62793}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE7BE74E-7139-4B8D-9950-6E7189B62793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45A714DE-573A-4770-893C-6FDF860F0CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45A714DE-573A-4770-893C-6FDF860F0CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45A714DE-573A-4770-893C-6FDF860F0CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45A714DE-573A-4770-893C-6FDF860F0CEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

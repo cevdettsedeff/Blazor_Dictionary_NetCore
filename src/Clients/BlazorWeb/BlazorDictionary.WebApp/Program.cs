@@ -13,7 +13,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddHttpClient("WebApiClient", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:5001"); // Base adres burasý olacak.
+    client.BaseAddress = new Uri("http://localhost:8080"); // Base adres burasý olacak.
 }).AddHttpMessageHandler<AuthTokenHandler>(); 
 
 builder.Services.AddScoped(sp =>

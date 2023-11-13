@@ -8,7 +8,11 @@ namespace BlazorDictionary.Common
 {
     public class DictionaryConstants
     {
+#if DEBUG
         public const string RabbitMQHost = "localhost";
+#else
+        public const string RabbitMQHost = "kind_dirac";
+#endif
         public const string DefaultExchangeType = "direct";
 
 
